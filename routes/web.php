@@ -227,6 +227,9 @@ Route::group(['middleware' => 'admin_auth', 'prefix' => 'admin-panel', 'as' => '
     Route::get('bannerGallary', [AdminOthers::class, 'bannerGallary'])->name('bannerGallary.index');
     Route::post('bannerGallary', [AdminOthers::class, 'bannerGallary_store'])->name('bannerGallary.store');
     // how to order
+    Route::get('contactUs', [AdminOthers::class, 'contactUs'])->name('contactUs.index');
+    Route::post('contactUs', [AdminOthers::class, 'contactUs_store'])->name('contactUs.store');
+    // how to order
     Route::get('howToOrder', [AdminOthers::class, 'howToOrder'])->name('howToOrder.index');
     Route::post('howToOrder', [AdminOthers::class, 'howToOrder_store'])->name('howToOrder.store');
     // terms and conditions

@@ -84,6 +84,22 @@ class OthersController extends Controller
             return response()->json(['error' => true, $validator->errors()]);
         }
     }
+    public function contactUs(){
+        $value = $this->getValueByKey('contact_us');
+        return view('admin.others.contact_us', compact('value'));
+    }
+    public function contactUs_store(Request $request){
+        $validator =  Validator::make($request->all(), [
+            'value' => 'required',
+        ]);
+        if ($validator->passes()) {
+            $value = $this->storeValueByKey('contact_us', $request);
+
+            return response()->json(['success' => true, 'mgs' => 'Contact Successfully Updated']);
+        }else{
+            return response()->json(['error' => true, $validator->errors()]);
+        }
+    }
     public function privacyPolicy(){
         $value = $this->getValueByKey('privacy_policy');
         return view('admin.others.privacy_policy', compact('value'));

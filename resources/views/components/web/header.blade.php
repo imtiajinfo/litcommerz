@@ -15,7 +15,7 @@
                         <div class="topbar-right ml-auto">
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                    <a class="u-header-topbar__nav-link">Customer Support: <span class="text-blue">{{$setting_header->phone}}</span> | (Japanese & English)</a>
+                                    <a class="u-header-topbar__nav-link">Customer Support: <span class="text-blue">{{$setting_header->phone}}</span></a>
                                 </li>
                                 
                             </ul>

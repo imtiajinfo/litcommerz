@@ -99,25 +99,15 @@
         </div>
         <div class="col-md-4 col-xl-3">
             <div class="border-bottom border-color-1 mb-5">
-                <h3 class="section-title mb-0 pb-2 font-size-25">Our Store</h3>
+                <h3 class="section-title mb-0 pb-2 font-size-25">Contact US</h3>
             </div>
             <div class="mr-xl-6">
-                <address class="mb-6">
-                    Shop Address (Branch-1)<br>
-                    〒 114-0001 Tokyo-to, <br>
-                    Kita-ku, Higashi Jujo 3-18-26
-                </address>
-                <address class="mb-6">
-                    Office and Shop <br>
-                    〒 125-0062 Tokyo to <br>
-                    Katsushika ku, Aoto 4-21-28 <br>
-                    Tel: 03-6662-7787, Mobile: 090-6476-4347 (Japanese & English)
-                </address>
-                <h5>Phone</h5>
-                <p>03-6662-7787</p>
-                <h5>Fax</h5>
-                <p>03-6662-7787</p>
-                
+
+              @php
+                $contact = \App\Models\KeyValueSetting::where('key', 'contact_us')->first();
+              @endphp
+              {!! $contact->value !!}
+
             </div>
         </div>
     </div>
