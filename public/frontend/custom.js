@@ -452,23 +452,15 @@ $(document).ready(function(){
             data:formData,
             dataType:'json',
             success: function(data){
-                console.log(data);
-
-                if(data.success == 1){
-                    toastr.success(data.mgs);
-                    window.location.href = '/order-success/'+data.order_id;
-                }else if(data.error == 1){
-                    toastr.error(data.mgs);
-                }else{
-                    $.each(data[0], function (key, item) {
-                        toastr.error(item);
-                    });
-                }
-
-                $(".order-placed").attr('disabled', false);
-                
+              if(data.redirectUrl){
+                  window.location.href = data.redirectUrl;
+              } else if(data.success){
+                  localStorage.removeItem('cart');
+                  window.location.href = '/order-success/'+data.order_id;
+              }
             },
             error: function (xhr) {
+                console.error(xhr.responseText);
                 if (xhr.status === 422) {
                     let errors = xhr.responseJSON.errors;
                     $.each(errors, function (key, messages) {

@@ -129,6 +129,9 @@ Route::get('/new-arrivals', [CouponOfferController::class, 'new_arrivals'])->nam
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/stripe/resume', [CheckoutController::class, 'resumeOrderFlow'])
+     ->name('stripe.resumeOrderFlow');
+Route::get('/payment/cancel', [CheckoutController::class, 'paymentCancel'])->name('payment.cancel');
 Route::get('/invoice/{order_id}', [OrderController::class, 'invoice'])->name('order.user.invoice');
 Route::get('/order-success/{order_id}', [OrderController::class, 'order_success']);
 

@@ -274,6 +274,16 @@ $setting = Helper::setting();
                                                         Cash on delivery
                                                     </label>
                                                 </div>
+                                                <!-- Stripe Payment Option -->
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" class="custom-control-input"
+                                                        id="stripePayment" name="payment_type"
+                                                        value="stripe">
+                                                    <label class="custom-control-label form-label"
+                                                        for="stripePayment">
+                                                        Credit/Debit Card (Stripe)
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- End Card -->
