@@ -9,14 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'category_name',
-        'slug',
-        'image',
-        'home_show',
-        'status',
-        'sl'
-    ];
+    protected $guarded = [];
 
     // public function sub_categories(){
     //     return $this->hasMany(SubCategory::class)->where('sub_categories.status', 1)->orderBy('sl', 'asc')->distinct('sub_categories.name');

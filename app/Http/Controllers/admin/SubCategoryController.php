@@ -54,37 +54,53 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validator =  Validator::make($request->all(), [
-            'subcategory_name' => 'required|unique:sub_categories',
-            'category_id' => 'required',
-            'status'        => 'required',
+        // Auto-generate slug
+        $slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->subcategory_name);
+
+        $validator = Validator::make($request->all(), [
+            'subcategory_name' => 'required|unique:sub_categories,subcategory_name',
+            'slug'             => 'nullable|unique:sub_categories,slug', // validate slug
+            'category_id'      => 'required',
+            'status'           => 'required',
+            'image'            => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
+            'meta_og_image'    => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
         ]);
 
-        if ($validator->passes()) {
-
-            if($request->hasfile('image')){ 
-                $validator =  Validator::make($request->all(), [
-                    'image'         => 'required|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
-                ]);
-                $imageName = Str::slug($request->input('subcategory_name')).'-'.date('d.m.Y.h.s').'.'.$request->image->extension();  
-                $request->image->move(public_path('frontend/images/subcategory/'), $imageName);
-            }
-
-            $subcategory = new SubCategory();
-            $subcategory->category_id = $request->category_id;
-            $subcategory->subcategory_name = $request->subcategory_name;
-            $subcategory->slug = Str::slug($request->subcategory_name);
-            if(@$imageName){
-                $subcategory->image = $imageName;
-            }
-            $subcategory->status = $request->status;
-            $subcategory->sl = $request->sl;
-            $subcategory->save();
-
-            return response()->json(['success' => true, 'mgs' => 'subCategory Successfully Created']);
-        }else{
-            return response()->json(['error' => true, $validator->errors()]);
+        if ($validator->fails()) {
+            return response()->json(['error' => true, 'messages' => $validator->errors()]);
         }
+
+        // Main Image
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = $slug . '-' . date('d.m.Y.h.s') . '.' . $request->image->extension();
+            $request->image->move(public_path('frontend/images/subcategory/'), $imageName);
+        }
+
+        // OG Image
+        $ogImageName = null;
+        if ($request->hasFile('meta_og_image')) {
+            $ogImageName = $slug . '-og-' . date('d.m.Y.h.s') . '.' . $request->meta_og_image->extension();
+            $request->meta_og_image->move(public_path('frontend/images/subcategory/og/'), $ogImageName);
+        }
+
+        // Save SubCategory
+        $subcategory = new SubCategory();
+        $subcategory->category_id       = $request->category_id;
+        $subcategory->subcategory_name  = $request->subcategory_name;
+        $subcategory->slug              = $slug;
+        $subcategory->image             = $imageName;
+        $subcategory->image_alt         = $request->image_alt;
+        $subcategory->status            = $request->status;
+        $subcategory->sl                = $request->sl;
+        $subcategory->meta_title        = $request->meta_title;
+        $subcategory->meta_description  = $request->meta_description;
+        $subcategory->meta_keywords     = $request->meta_keywords;
+        $subcategory->meta_og_image     = $ogImageName;
+        $subcategory->meta_og_alt       = $request->meta_og_alt;
+        $subcategory->save();
+
+        return response()->json(['success' => true, 'mgs' => 'SubCategory Successfully Created']);
     }
 
     /**
@@ -110,44 +126,59 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator =  Validator::make($request->all(), [
+        $subcategory = SubCategory::findOrFail($id);
+
+        // Auto-generate slug
+        $slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->subcategory_name);
+
+        $validator = Validator::make($request->all(), [
+            'subcategory_name' => 'required|unique:sub_categories,subcategory_name,' . $id,
+            'slug'             => 'required|unique:sub_categories,slug,' . $id, // unique slug
             'category_id'      => 'required',
-            'subcategory_name' => 'required',
             'status'           => 'required',
-            'category_id'      => 'required',
+            'image'            => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
+            'meta_og_image'    => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
         ]);
 
-        if($request->image){
-            $validator =  Validator::make($request->all(), [
-                'image'         => 'required|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
-            ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => true, 'messages' => $validator->errors()]);
         }
 
-        if ($validator->passes()) {
-
-            if($request->hasfile('image')){ 
-                $imageName = Str::slug($request->input('subcategory_name')).'-'.date('d.m.Y.h.s').'.'.$request->image->extension();  
-                $request->image->move(public_path('frontend/images/subcategory/'), $imageName);
+        // Main Image
+        if ($request->hasFile('image')) {
+            if ($subcategory->image && file_exists(public_path('frontend/images/subcategory/' . $subcategory->image))) {
+                @unlink(public_path('frontend/images/subcategory/' . $subcategory->image));
             }
-
-            $subcategory = SubCategory::findOrFail($id);
-            $subcategory->subcategory_name = $request->subcategory_name;
-            $subcategory->category_id = $request->category_id;
-            $subcategory->slug = Str::slug($request->subcategory_name);
-            if($request->image){
-                if($subcategory->image){
-                    @unlink('frontend/images/subcategory/'.$subcategory->image);
-                }
-                $subcategory->image = $imageName;
-            }
-            $subcategory->status = $request->status;
-            $subcategory->sl = $request->sl;
-            $subcategory->save();
-
-            return response()->json(['success' => true, 'mgs' => 'subCategory Successfully Updated']);
-        }else{
-            return response()->json(['error' => true, $validator->errors()]);
+            $imageName = $slug . '-' . date('d.m.Y.h.s') . '.' . $request->image->extension();
+            $request->image->move(public_path('frontend/images/subcategory/'), $imageName);
+            $subcategory->image = $imageName;
         }
+
+        // OG Image
+        if ($request->hasFile('meta_og_image')) {
+            if ($subcategory->meta_og_image && file_exists(public_path('frontend/images/subcategory/og/' . $subcategory->meta_og_image))) {
+                @unlink(public_path('frontend/images/subcategory/og/' . $subcategory->meta_og_image));
+            }
+            $ogImageName = $slug . '-og-' . date('d.m.Y.h.s') . '.' . $request->meta_og_image->extension();
+            $request->meta_og_image->move(public_path('frontend/images/subcategory/og/'), $ogImageName);
+            $subcategory->meta_og_image = $ogImageName;
+        }
+
+        // Update fields
+        $subcategory->subcategory_name  = $request->subcategory_name;
+        $subcategory->slug               = $slug;
+        $subcategory->category_id        = $request->category_id;
+        $subcategory->image_alt          = $request->image_alt;
+        $subcategory->status             = $request->status;
+        $subcategory->sl                 = $request->sl;
+        $subcategory->meta_title         = $request->meta_title;
+        $subcategory->meta_description   = $request->meta_description;
+        $subcategory->meta_keywords      = $request->meta_keywords;
+        $subcategory->meta_og_alt        = $request->meta_og_alt;
+
+        $subcategory->save();
+
+        return response()->json(['success' => true, 'mgs' => 'SubCategory Successfully Updated']);
     }
 
     /**

@@ -7,7 +7,7 @@
         <a href="category-sorting" class="btn btn-added anchor">
             <img src="{{ asset('admin/assets/img/icons/transfer1.svg') }}" class="me-1" alt="img">Sorting
         </a>&nbsp;&nbsp;
-        <a href="#" class="btn btn-added show-modal" hideModal="hide" modalTitle="Add Category" modalSize="md" url="category/create">
+        <a href="#" class="btn btn-added show-modal" hideModal="hide" modalTitle="Add Category" modalSize="lg" url="category/create">
             <img src="{{ asset('admin/assets/img/icons/plus.svg') }}" class="me-1" alt="img">Add Category
         </a>
     </div>
@@ -65,7 +65,7 @@
                                 <td>@if($item->status == 1){{"Active"}}@else{{"Invactive"}}@endif</td>
                                 <td>@if($item->home_show == 1){{"Yes"}}@else{{"No"}}@endif</td>
                                 <td class="action text-center" data-id="{{ $item->id }}">
-                                    <a class="me-3 data-edit" data-id="{{ $item->id }}" url="category/{{$item->id}}/edit" hideModal="hide" modalTitle="Edit Category">
+                                    <a class="me-3 data-edit" data-id="{{ $item->id }}" url="category/{{$item->id}}/edit" hideModal="hide" modalSize="lg" modalTitle="Edit Category">
                                         <img src="{{ asset('admin/assets/img/icons/edit.svg') }}" alt="img">
                                     </a>
                                     <a data-id="{{ $item->id }}" url="/category/{{$item->id}}" class="me-3 confirm-text delete" href="javascript:void(0);">

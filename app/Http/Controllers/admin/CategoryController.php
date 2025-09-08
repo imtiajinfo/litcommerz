@@ -40,31 +40,54 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validator =  Validator::make($request->all(), [
+        // Auto-generate slug if not provided
+        $slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->category_name);
+
+        $validator = Validator::make($request->all(), [
             'category_name' => 'required|unique:categories',
+            'slug'          => 'required|unique:categories,slug',
             'image'         => 'required|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
             'status'        => 'required',
+            'meta_og_image' => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
         ]);
 
-        if ($validator->passes()) {
-
-            if($request->hasfile('image')){ 
-                $imageName = Str::slug($request->input('category_name')).'-'.date('d.m.Y.h.s').'.'.$request->image->extension();  
-                $request->image->move(public_path('frontend/images/category/'), $imageName);
-            }
-
-            $category = new Category();
-            $category->category_name = $request->category_name;
-            $category->slug = Str::slug($request->category_name);
-            $category->image = $imageName;
-            $category->status = $request->status;
-            $category->home_show = $request->home_show;
-            $category->save();
-
-            return response()->json(['success' => true, 'mgs' => 'Category Successfully Created']);
-        }else{
-            return response()->json(['error' => true, $validator->errors()]);
+        if ($validator->fails()) {
+            return response()->json(['error' => true, 'messages' => $validator->errors()]);
         }
+
+        // Upload Category Image
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = Str::slug($request->category_name) . '-' . date('d.m.Y.h.s') . '.' . $request->image->extension();
+            $request->image->move(public_path('frontend/images/category/'), $imageName);
+        }
+
+        // Upload OG Image
+        $ogImageName = null;
+        if ($request->hasFile('meta_og_image')) {
+            $ogImageName = Str::slug($request->category_name) . '-og-' . date('d.m.Y.h.s') . '.' . $request->meta_og_image->extension();
+            $request->meta_og_image->move(public_path('frontend/images/category/og/'), $ogImageName);
+        }
+
+        // Save Category
+        $category = new Category();
+        $category->category_name   = $request->category_name;
+        $category->slug            = $slug;
+        $category->image           = $imageName;
+        $category->image_alt       = $request->image_alt;
+        $category->status          = $request->status;
+        $category->home_show       = $request->home_show;
+
+        // SEO fields
+        $category->meta_title       = $request->meta_title;
+        $category->meta_description = $request->meta_description;
+        $category->meta_keywords    = $request->meta_keywords;
+        $category->meta_og_image    = $ogImageName;
+        $category->meta_og_alt      = $request->meta_og_alt;
+
+        $category->save();
+
+        return response()->json(['success' => true, 'mgs' => 'Category Successfully Created']);
     }
 
     /**
@@ -89,41 +112,61 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator =  Validator::make($request->all(), [
+        $category = Category::findOrFail($id);
+
+        // Auto-generate slug if empty
+        $slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->category_name);
+
+        $rules = [
             'category_name' => 'required',
+            'slug'          => 'required|unique:categories,slug,' . $id, // exclude current record
             'status'        => 'required',
-        ]);
+        ];
 
-        if($request->image){
-            $validator =  Validator::make($request->all(), [
-                'image' => 'required|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
-            ]);
+        if ($request->hasFile('image')) {
+            $rules['image'] = 'image|mimes:jpeg,png,jpg|dimensions:width=600,height=600';
         }
 
-        if ($validator->passes()) {
-
-            if($request->hasfile('image')){ 
-                $imageName = Str::slug($request->input('category_name')).'-'.date('d.m.Y.h.s').'.'.$request->image->extension();  
-                $request->image->move(public_path('frontend/images/category/'), $imageName);
-            }
-
-            $category = Category::findOrFail($id);
-            $category->category_name = $request->category_name;
-            $category->slug = Str::slug($request->category_name);
-            if($request->image){
-                if($category->image){
-                    @unlink('frontend/images/category/'.$category->image);
-                }
-                $category->image = $imageName;
-            }
-            $category->status = $request->status;
-            $category->home_show = $request->home_show;
-            $category->save();
-
-            return response()->json(['success' => true, 'mgs' => 'Category Successfully Updated']);
-        }else{
-            return response()->json(['error' => true, $validator->errors()]);
+        if ($request->hasFile('meta_og_image')) {
+            $rules['meta_og_image'] = 'image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630';
         }
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => true, 'errors' => $validator->errors()]);
+        }
+
+        // Handle main image
+        if ($request->hasFile('image')) {
+            $imageName = Str::slug($request->category_name) . '-' . date('d.m.Y.h.s') . '.' . $request->image->extension();
+            $request->image->move(public_path('frontend/images/category/'), $imageName);
+            if ($category->image) @unlink(public_path('frontend/images/category/'.$category->image));
+            $category->image = $imageName;
+        }
+
+        // Handle OG image
+        if ($request->hasFile('meta_og_image')) {
+            $ogImageName = Str::slug($request->category_name) . '-og-' . date('d.m.Y.h.s') . '.' . $request->meta_og_image->extension();
+            $request->meta_og_image->move(public_path('frontend/images/category/og/'), $ogImageName);
+            if ($category->meta_og_image) @unlink(public_path('frontend/images/category/og/'.$category->meta_og_image));
+            $category->meta_og_image = $ogImageName;
+        }
+
+        // Update all fields
+        $category->category_name   = $request->category_name;
+        $category->slug            = $slug;
+        $category->image_alt       = $request->image_alt;
+        $category->status          = $request->status;
+        $category->home_show       = $request->home_show;
+        $category->meta_title       = $request->meta_title;
+        $category->meta_description = $request->meta_description;
+        $category->meta_keywords    = $request->meta_keywords;
+        $category->meta_og_alt      = $request->meta_og_alt;
+
+        $category->save();
+
+        return response()->json(['success' => true, 'mgs' => 'Category Successfully Updated']);
     }
 
     /**

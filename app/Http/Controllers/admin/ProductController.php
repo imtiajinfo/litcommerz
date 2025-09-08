@@ -104,6 +104,7 @@ class ProductController extends Controller
     {
         $validator =  Validator::make($request->all(), [
             'product_name'   => 'required',
+            'slug'           => 'nullable|unique:products,slug', 
             'buy_price'    => 'required|numeric|min:1',
             'sell_price'    => 'required|numeric|min:1',
             'available_stock'    => 'required|numeric|min:0',
@@ -112,15 +113,25 @@ class ProductController extends Controller
             'subcategory_ids'  => 'nullable|array',
             'subcategory_ids.0'=> 'nullable|numeric',
             'images.*'       => 'required|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
+            'meta_og_image'    => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
             'status'         => 'required|numeric',
         ]);
         if ($validator->passes()) {
 
             DB::beginTransaction();
+            $slug = $request->slug 
+            ? Str::slug($request->slug) 
+            : Str::slug($request->product_name);
+
+            $ogImageName = null;
+            if ($request->hasFile('meta_og_image')) {
+                $ogImageName = $slug.'-og-'.date('d.m.Y.h.s').'.'.$request->meta_og_image->extension();
+                $request->meta_og_image->move(public_path('frontend/images/product/og/'), $ogImageName);
+            }
 
             $product = new Product();
             $product->product_name      = $request->product_name;
-            $product->slug              = Str::slug($request->product_name);
+            $product->slug = $slug;
             $product->buy_price         = $request->buy_price;
             $product->sell_price        = $request->sell_price;
             $product->available_stock   = $request->available_stock;
@@ -135,6 +146,12 @@ class ProductController extends Controller
             $product->unit              = $request->unit ?? 0;
             $product->weight            = $request->weight;
             $product->note              = $request->note;
+            $product->meta_title       = $request->meta_title;
+            $product->meta_description = $request->meta_description;
+            $product->meta_keywords    = $request->meta_keywords;
+            $product->meta_og_image     = $ogImageName;
+            $product->meta_og_alt      = $request->meta_og_alt;
+            $product->image_alt         = $request->image_alt;
             $product->save();
 
             
@@ -264,17 +281,41 @@ class ProductController extends Controller
       // return response()->json($request->all());
         $validator =  Validator::make($request->all(), [
             'product_name'   => 'required',
+            'slug'           => 'nullable|unique:products,slug,' . $id,
             'status'         => 'required',
             'category_ids'     => 'required|array|min:1',
             'category_ids.0'   => 'required|numeric',
             'subcategory_ids'  => 'nullable|array',
             'subcategory_ids.0'=> 'nullable|numeric',
+            'meta_og_image'    => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
         ]);
         if ($validator->passes()) {
 
             DB::beginTransaction();
 
             $product = Product::find($id);
+
+            $product->slug = $request->slug 
+                ? Str::slug($request->slug) 
+                : Str::slug($request->product_name);
+
+            // OG Image
+            if ($request->hasFile('meta_og_image')) {
+                // remove old file
+                if($product->meta_og_image && file_exists(public_path('frontend/images/product/og/'.$product->meta_og_image))){
+                    @unlink(public_path('frontend/images/product/og/'.$product->meta_og_image));
+                }
+                $ogImageName = $product->slug.'-og-'.date('d.m.Y.h.s').'.'.$request->meta_og_image->extension();
+                $request->meta_og_image->move(public_path('frontend/images/product/og/'), $ogImageName);
+                $product->meta_og_image = $ogImageName;
+            }
+
+            $product->meta_title       = $request->meta_title ?? $product->meta_title;
+            $product->meta_description = $request->meta_description ?? $product->meta_description;
+            $product->meta_keywords    = $request->meta_keywords ?? $product->meta_keywords;
+            $product->meta_og_alt      = $request->meta_og_alt ?? $product->meta_og_alt;
+            $product->image_alt = $request->image_alt ?? $product->image_alt;
+
             $product->product_name      = $request->product_name;
             $product->slug              = Str::slug($request->product_name);
             $product->buy_price         = $request->buy_price;

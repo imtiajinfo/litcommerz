@@ -186,6 +186,12 @@
             </div>
         </div>
         <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Image Alt</label>
+                <input type="text" class="form-control" name="image_alt" placeholder="Image Alt Text" value="{{ $product->image_alt }}">
+            </div>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-12">
             <label for="" class="text-bold mb-2">Description :</label>
             <textarea id="product-add" name="description">{{$product->description}}</textarea>
         </div>
@@ -222,6 +228,54 @@
                 </select>
             </div>
         </div>
+
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Slug</label>
+                <input type="text" class="form-control" name="slug" placeholder="Custom URL slug (leave empty to auto-generate)" value="{{ $product->slug }}">
+            </div>
+        </div>
+
+        <!-- Meta Title -->
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Meta Title</label>
+                <input type="text" class="form-control" name="meta_title" placeholder="Meta Title" value="{{ $product->meta_title }}">
+            </div>
+        </div>
+
+        <!-- Meta Description -->
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Meta Description</label>
+                <textarea class="form-control" name="meta_description" rows="3" placeholder="Meta Description">{{ $product->meta_description }}</textarea>
+            </div>
+        </div>
+
+        <!-- Meta Keywords -->
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Meta Keywords</label>
+                <input type="text" class="form-control" name="meta_keywords" placeholder="Meta Keywords (comma separated)" value="{{ $product->meta_keywords }}">
+            </div>
+        </div>
+
+        <!-- OG Image -->
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>OG Image [Size: 1200x630 px]</label>
+                <img id="ogimg" src="{{ asset('frontend/images/product/og/'.$product->meta_og_image) }}" width="50%">
+                <input type="file" name="meta_og_image" class="form-control" oninput="ogimg.src=window.URL.createObjectURL(this.files[0])">
+            </div>
+        </div>
+
+        <!-- OG Image Alt -->
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>OG Image Alt</label>
+                <input type="text" class="form-control" name="meta_og_alt" placeholder="OG Image Alt Text" value="{{ $product->meta_og_alt }}">
+            </div>
+</div>
 
     </div>
 

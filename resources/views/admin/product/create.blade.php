@@ -118,6 +118,12 @@
             </div>
         </div>
         <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Image Alt</label>
+                <input type="text" class="form-control" name="image_alt" placeholder="Image Alt Text">
+            </div>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-12">
             <label for="" class="text-bold mb-2">Description :</label>
             <textarea id="product-add" name="description"></textarea>
         </div>
@@ -152,6 +158,49 @@
                     <option value="1">Active</option>
                     <option value="2">Inactive</option>
                 </select>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Slug</label>
+                <input type="text" class="form-control" name="slug" placeholder="Custom URL slug (leave empty to auto-generate)">
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Meta Title</label>
+                <input type="text" class="form-control" name="meta_title" placeholder="Meta Title">
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Meta Description</label>
+                <textarea class="form-control" name="meta_description" rows="3" placeholder="Meta Description"></textarea>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>Meta Keywords</label>
+                <input type="text" class="form-control" name="meta_keywords" placeholder="Meta Keywords (comma separated)">
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>OG Image [Size: 1200x630 px]</label>
+                <img id="productImg" width="50%">
+                <input type="file" name="meta_og_image" class="form-control" oninput="productImg.src=window.URL.createObjectURL(this.files[0])">
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label>OG Image Alt</label>
+                <input type="text" class="form-control" name="meta_og_alt" placeholder="OG Image Alt Text">
             </div>
         </div>
         

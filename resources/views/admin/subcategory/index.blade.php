@@ -4,7 +4,7 @@
         <h6>View/Search product Sub Category</h6>
     </div>
     <div class="page-btn">
-        <a href="#" class="btn btn-added show-modal" hideModal="hide" modalTitle="Add Sub Category" modalSize="md" url="subcategory/create">
+        <a href="#" class="btn btn-added show-modal" hideModal="hide" modalTitle="Add Sub Category" modalSize="lg" url="subcategory/create">
             <img src="{{ asset('admin/assets/img/icons/plus.svg') }}" class="me-1" alt="img">Add Sub Category
         </a>
     </div>
@@ -75,7 +75,7 @@
                                 <td>@if($item->status == 1){{"Active"}}@else{{"Invactive"}}@endif</td>
                                 <td>{{ $item->sl }}</td>
                                 <td class="action text-center">
-                                    <a class="me-3 data-edit" url="subcategory/{{ $item->id }}/edit" hideModal="hide" modalTitle="Edit Sub Category">
+                                    <a class="me-3 data-edit" url="subcategory/{{ $item->id }}/edit" modalSize="lg" hideModal="hide" modalTitle="Edit Sub Category">
                                         <img src="{{ asset('admin/assets/img/icons/edit.svg') }}" alt="img">
                                     </a>
                                     <a data-id="{{ $item->id }}" url="/subcategory/{{$item->id}}" class="me-3 confirm-text delete" href="javascript:void(0);">
