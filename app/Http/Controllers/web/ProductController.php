@@ -13,6 +13,11 @@ class ProductController extends Controller
 {
     public function pro_details($pro_slug){
         $data['product'] = $product = Product::where('slug',$pro_slug)->first();
+        $data['meta_title']       = $product->meta_title ?? '';
+        $data['meta_description'] = $product->meta_description ?? '';
+        $data['meta_keywords']    = $product->meta_keywords ?? '';
+        $data['meta_og_image']    = $product->meta_og_image ?? '';
+        $data['meta_og_alt']      = $product->meta_og_alt ?? '';
 
         $data['products'] = Product::where([
             ['status', 1],

@@ -6,11 +6,16 @@
 
 <head>
     <!-- Title -->
-    <title>@hasSection('title') @yield('title') @else {{"My Daily Shop"}} @endif</title>
+    <title>@yield('title', '')</title>
 
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="title" content="@yield('meta_title', '')">
+    <meta name="description" content="@yield('meta_description', '')">
+    <meta name="keywords" content="@yield('meta_keywords', '')">
+    <meta property="og:image" content="@yield('meta_og_image', '')">
+    <meta property="og:alt" content="@yield('meta_og_alt', '')">
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('frontend/logo/'.$setting->meta_logo) }}">
     <!-- Google Fonts -->
@@ -32,10 +37,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     {{-- meta tags  --}}
-    <meta name="description" content="@hasSection('meta_desc') @yield('meta_desc') @else {{"My Daily Shop | Best Halal Shop in Japan"}} @endif">
-    <meta name="keywords" content="@hasSection('meta_keyword') @yield('meta_keyword') @else {{"Best Halal Shop in Japan for Muslim Community/Asian/African/Part of Europe and America"}} @endif">
-    <meta property="og:image" content="@hasSection('meta_img') @yield('meta_img') @else {{ asset('frontend/logo/'.$setting->logo) }} @endif">
-    <meta property="og:image:height" content="@hasSection('meta_img_height') @yield('meta_img_height') @else {{"100"}} @endif">
+
 
     <!-- vite -->
     {{-- @vite(['resources/js/app.js']) --}}

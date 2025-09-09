@@ -67,7 +67,7 @@ class SubCategoryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => true, 'messages' => $validator->errors()]);
+            return response()->json(['error' => true, 'errors' => $validator->errors()]);
         }
 
         // Main Image
@@ -133,7 +133,7 @@ class SubCategoryController extends Controller
 
         $validator = Validator::make($request->all(), [
             'subcategory_name' => 'required|unique:sub_categories,subcategory_name,' . $id,
-            'slug'             => 'required|unique:sub_categories,slug,' . $id, // unique slug
+            // 'slug'             => 'required|unique:sub_categories,slug,' . $id, // unique slug
             'category_id'      => 'required',
             'status'           => 'required',
             'image'            => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
@@ -141,7 +141,7 @@ class SubCategoryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => true, 'messages' => $validator->errors()]);
+            return response()->json(['error' => true, 'errors' => $validator->errors()]);
         }
 
         // Main Image

@@ -317,7 +317,6 @@ class ProductController extends Controller
             $product->image_alt = $request->image_alt ?? $product->image_alt;
 
             $product->product_name      = $request->product_name;
-            $product->slug              = Str::slug($request->product_name);
             $product->buy_price         = $request->buy_price;
             $product->sell_price        = $request->sell_price;
             $product->category_id       = $request->category_ids[0];

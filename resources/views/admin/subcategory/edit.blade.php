@@ -60,6 +60,13 @@
             </div>
         </div>
 
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label>Slug</label>
+                <input type="text" class="form-control" name="slug" value="{{ $subcategory->slug }}" placeholder="Custom URL slug (leave empty to auto-generate)">
+            </div>
+        </div>
+
         {{-- SEO Fields --}}
         <div class="col-lg-12">
             <div class="form-group">

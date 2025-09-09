@@ -1,9 +1,11 @@
 @extends('web.layouts.master')
 
-@section('title', $product->product_name)
-@section('meta_desc', $product->description)
-@section('meta_keyword', $product->product_name)
-@section('meta_img', asset('frontend/images/product/'.$product->first_img->image))
+@section('title', $meta_title)
+@section('meta_title', $meta_title)
+@section('meta_description', $meta_description)
+@section('meta_keywords', $meta_keywords)
+@section('meta_og_image', $meta_og_image)
+@section('meta_og_alt', $meta_og_alt)
 @php
     $setting = Helper::setting();
 @endphp

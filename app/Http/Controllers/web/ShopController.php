@@ -164,6 +164,11 @@ class ShopController extends Controller
         $data['products'] = $query->paginate($perPage);
 
         $data['category'] = $category = Category::where('slug', $category_slug)->first();
+        $data['meta_title']       = $category->meta_title ?? '';
+        $data['meta_description'] = $category->meta_description ?? '';
+        $data['meta_keywords']    = $category->meta_keywords ?? '';
+        $data['meta_og_image']    = $category->meta_og_image ?? '';
+        $data['meta_og_alt']      = $category->meta_og_alt ?? '';
 
         if (session()->has('carts')) {
             $data['carts'] = array_column(session()->get('carts'), 'product_id');
@@ -272,6 +277,11 @@ class ShopController extends Controller
         }
 
         $data['subcategory'] = $subcategory = SubCategory::where('slug', $subcategory_slug)->first();
+        $data['meta_title']       = $subcategory->meta_title ?? '';
+        $data['meta_description'] = $subcategory->meta_description ?? '';
+        $data['meta_keywords']    = $subcategory->meta_keywords ?? '';
+        $data['meta_og_image']    = $subcategory->meta_og_image ?? '';
+        $data['meta_og_alt']      = $subcategory->meta_og_alt ?? '';
         $data['category'] = Category::where('id', $subcategory->category_id)->first();
 
         $data['carts'] = session()->has('carts') ? array_column(session()->get('carts'), 'product_id') : [];

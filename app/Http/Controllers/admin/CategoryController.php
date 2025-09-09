@@ -52,7 +52,7 @@ class CategoryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => true, 'messages' => $validator->errors()]);
+            return response()->json(['error' => true, 'errors' => $validator->errors()]);
         }
 
         // Upload Category Image
