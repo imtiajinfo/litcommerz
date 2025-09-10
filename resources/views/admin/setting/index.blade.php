@@ -51,8 +51,22 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group input-group-sm">
-                            <label for="">Free Shipping Limit (¥)</label>
+                            <label for="">Free Shipping Limit ({{ $setting->currency_icon }})</label>
                             <input value="{{ $setting->free_shipping_limit ?? 0 }}" name="free_shipping_limit" type="number" step="0.01" min="0" class="form-control" placeholder="Free Shipping Limit">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group input-group-sm">
+                            <label for="">Currency</label>
+                            <select name="currency_icon" class="form-control">
+                                <option value="৳" {{ $setting->currency_icon == '৳' ? 'selected' : '' }}>Taka (৳)</option>
+                                <option value="$" {{ $setting->currency_icon == '$' ? 'selected' : '' }}>USD ($)</option>
+                                <option value="€" {{ $setting->currency_icon == '€' ? 'selected' : '' }}>Euro (€)</option>
+                                <option value="£" {{ $setting->currency_icon == '£' ? 'selected' : '' }}>Pound (£)</option>
+                                <option value="₹" {{ $setting->currency_icon == '₹' ? 'selected' : '' }}>Rupee (₹)</option>
+                                <option value="¥" {{ $setting->currency_icon == '¥' ? 'selected' : '' }}>Yen (¥)</option>
+                            </select>
                         </div>
                     </div>
                 

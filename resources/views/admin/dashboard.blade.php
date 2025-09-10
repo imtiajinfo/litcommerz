@@ -1,3 +1,7 @@
+@php
+$setting = Helper::setting();
+@endphp
+
 <div class="row">
     <div class="col-lg-3 col-sm-6 col-12">
         <div class="dash-widget dash2">
@@ -5,7 +9,7 @@
                 <span><img src="{{ asset('admin/assets/img/icons/dash3.svg')}}" alt="img"></span>
             </div>
             <div class="dash-widgetcontent">
-                <h5>¥<span class="counters" data-count="{{$total_stock}}">{{number_format($total_stock,0)}}</span></h5>
+                <h5>{{ $setting->currency_icon }}<span class="counters" data-count="{{$total_stock}}">{{number_format($total_stock,0)}}</span></h5>
                 <h6>Total Stock</h6>
             </div>
         </div>
@@ -16,7 +20,7 @@
                 <span><img src="{{ asset('admin/assets/img/icons/dash1.svg')}}" alt="img"></span>
             </div>
             <div class="dash-widgetcontent">
-                <h5>¥<span class="counters" data-count="{{$total_sale}}">{{number_format($total_sale, 0)}}</span></h5>
+                <h5>{{ $setting->currency_icon }}<span class="counters" data-count="{{$total_sale}}">{{number_format($total_sale, 0)}}</span></h5>
                 <h6>Total Sale</h6>
             </div>
         </div>
@@ -27,7 +31,7 @@
                 <span><img src="{{ asset('admin/assets/img/icons/dash2.svg')}}" alt="img"></span>
             </div>
             <div class="dash-widgetcontent">
-                <h5>¥<span class="counters" data-count="{{$total_pending}}">{{number_format($total_pending, 0)}}</span></h5>
+                <h5>{{ $setting->currency_icon }}<span class="counters" data-count="{{$total_pending}}">{{number_format($total_pending, 0)}}</span></h5>
                 <h6>Total Pending</h6>
             </div>
         </div>

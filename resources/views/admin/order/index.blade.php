@@ -1,3 +1,7 @@
+@php
+$setting = Helper::setting();
+@endphp
+
 <div class="page-header">
     <div class="page-title">
         <h4>Order list</h4>
@@ -146,7 +150,7 @@
                         @endforeach
                         <tr>
                             <td colspan="6" class="text-end fw-bold">Total:</td>
-                            <td class="text-center fw-bold">¥{{ $totalSum }}</td>
+                            <td class="text-center fw-bold">{{ $setting->currency_icon }}{{ $totalSum }}</td>
                             <td colspan="3"></td>
                         </tr>
 

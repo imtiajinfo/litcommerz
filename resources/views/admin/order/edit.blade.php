@@ -101,7 +101,7 @@
 
                             <div class="row mt-3">
                                 <div class="col-md-3">
-                                    <label class="required">Shipping Amount (¥)</label>
+                                    <label class="required">Shipping Amount ({{ $setting->currency_icon }})</label>
                                     <input type="number" step="any" name="shipping_amount" class="form-control" value="{{ $order->shipping_amount ?? 0 }}">
                                 </div>
 

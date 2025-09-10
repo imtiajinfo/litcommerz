@@ -206,7 +206,7 @@ $setting = Helper::setting();
                                                       font-size: 16px;">
                                                 FREE delivery on orders over 
                                                 <strong style="color:#d63384;">
-                                                    ¥{{ rtrim(rtrim(Helper::setting()->free_shipping_limit, '0'), '.') }}
+                                                    {{ $setting->currency_icon }}{{ rtrim(rtrim(Helper::setting()->free_shipping_limit, '0'), '.') }}
                                                 </strong>.
                                                 <a href="{{ route('shipping-details') }}"
                                                   style="text-decoration: underline; font-weight: bold; color: green;">

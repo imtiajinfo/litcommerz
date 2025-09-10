@@ -1,26 +1,27 @@
 <div class="page-header">
     <div class="page-title">
-        <h4>Privacy Policy Section</h4>
-        <h6>Update Privacy Policy</h6>
+        <h4>FAQ Section</h4>
+        <h6>Update FAQ</h6>
     </div>
 </div>
 
-<form class="form-load" type="create" action="{{ route('admin.privacyPolicy.store') }}" method="POST" enctype="multipart/form-data">
+<form class="form-load" type="create" action="{{ route('admin.faq.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="card">
         <div class="card-body">
-            {{-- Privacy Policy Content --}}
+            {{-- FAQ Content --}}
             <div class="row">
                 <div class="col-lg-12 col-sm-12 col-12">
                     <textarea id="summernote" name="value">{{ @$value }}</textarea>
                 </div>
             </div>
 
-
+            {{-- SEO & Open Graph Section --}}
             <h3 class="card-title my-3">SEO & Open Graph Settings</h3>
 
             <div class="row">
+                {{-- Meta Title --}}
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label>Meta Title</label>

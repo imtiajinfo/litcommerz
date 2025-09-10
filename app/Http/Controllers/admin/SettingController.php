@@ -57,6 +57,7 @@ class SettingController extends Controller
             $setting->linkedin  = $request->linkedin;
             $setting->whatsapp = $request->whats_app;
             $setting->address   = $request->address;
+            $setting->currency_icon   = $request->currency_icon;
             $setting->free_shipping_limit   = $request->free_shipping_limit;
             if($request->logo){
                 $setting->logo = $logoName;

@@ -216,7 +216,7 @@ Route::group(['middleware' => 'admin_auth', 'prefix' => 'admin-panel', 'as' => '
     Route::post('contact/mark-read', [AdminContactController::class, 'markAsRead'])->name('contact.mark-read');
     Route::resource('units', UnitController::class);
     Route::resource('about', AdminAbout::class);
-    Route::resource('faq', AdminFaq::class);
+    // Route::resource('faq', AdminFaq::class);
 
     Route::get('complains', [AdminOthers::class, 'complains'])->name('complains.index');
     Route::post('/complain/mark-read', [AdminOthers::class, 'markComplainRead'])->name('complain.mark-read');
@@ -224,14 +224,22 @@ Route::group(['middleware' => 'admin_auth', 'prefix' => 'admin-panel', 'as' => '
     Route::get('shippingDetails', [AdminOthers::class, 'shippingDetails'])->name('shippingDetails.index');
     Route::post('shippingDetails', [AdminOthers::class, 'shippingDetails_store'])->name('shippingDetails.store');
     // physical store 
-    Route::get('physicalStore', [AdminOthers::class, 'physicalStore'])->name('physicalStore.index');
-    Route::post('physicalStore', [AdminOthers::class, 'physicalStore_store'])->name('physicalStore.store');
+    // Route::get('physicalStore', [AdminOthers::class, 'physicalStore'])->name('physicalStore.index');
+    // Route::post('physicalStore', [AdminOthers::class, 'physicalStore_store'])->name('physicalStore.store');
     // banner gallery 
     Route::get('bannerGallary', [AdminOthers::class, 'bannerGallary'])->name('bannerGallary.index');
     Route::post('bannerGallary', [AdminOthers::class, 'bannerGallary_store'])->name('bannerGallary.store');
     // how to order
     Route::get('contactUs', [AdminOthers::class, 'contactUs'])->name('contactUs.index');
     Route::post('contactUs', [AdminOthers::class, 'contactUs_store'])->name('contactUs.store');
+    // FAQ Routes
+    Route::get('faq', [AdminOthers::class, 'faq'])->name('faq.index');
+    Route::post('faq', [AdminOthers::class, 'faq_store'])->name('faq.store');
+
+    // Physical Store Routes
+    Route::get('physicalStore', [AdminOthers::class, 'physicalStore'])->name('physicalStore.index');
+    Route::post('physicalStore', [AdminOthers::class, 'physicalStore_store'])->name('physicalStore.store');
+
     // how to order
     Route::get('howToOrder', [AdminOthers::class, 'howToOrder'])->name('howToOrder.index');
     Route::post('howToOrder', [AdminOthers::class, 'howToOrder_store'])->name('howToOrder.store');

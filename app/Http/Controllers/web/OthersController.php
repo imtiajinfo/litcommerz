@@ -19,15 +19,10 @@ class OthersController extends Controller
         }
         return view('web.others.shipping_details', compact('data'));
     }
-    public function physical_store(){
-        $value = KeyValueSetting::where('key', 'physical_store')->first();
-        if(!empty($value)){
-            $data = $value->value;
-        }else{
-            $data = '';
-        }
-        return view('web.others.physical_store', compact('data'));
-    }
+      public function physicalStore(){
+          $value = $this->getValueByKey('physical_store');
+          return view('admin.others.physical_store', compact('value'));
+      }
     public function banner_gallery(){
         $value = KeyValueSetting::where('key', 'banner_gallery')->first();
         if(!empty($value)){

@@ -1,3 +1,7 @@
+@php
+$setting = Helper::setting();
+@endphp
+
 <div class="page-header">
     <div class="page-title">
         <h4>Zone list</h4>
@@ -18,7 +22,7 @@
                     <tr>
                         <th class="sorting">Sl</th>
                         <th class="sorting">Zone</th>
-                        <th class="sorting">Delivery Charge (¥)</th>
+                        <th class="sorting">Delivery Charge ({{ $setting->currency_icon }})</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
