@@ -167,7 +167,7 @@ class ShopController extends Controller
         $data['meta_title']       = $category->meta_title ?? '';
         $data['meta_description'] = $category->meta_description ?? '';
         $data['meta_keywords']    = $category->meta_keywords ?? '';
-        $data['meta_og_image']    = $category->meta_og_image ?? '';
+        $data['meta_og_image']    = $category->meta_og_image ? asset('frontend/images/category/og/'.$category->meta_og_image) : '';
         $data['meta_og_alt']      = $category->meta_og_alt ?? '';
 
         if (session()->has('carts')) {
@@ -280,7 +280,7 @@ class ShopController extends Controller
         $data['meta_title']       = $subcategory->meta_title ?? '';
         $data['meta_description'] = $subcategory->meta_description ?? '';
         $data['meta_keywords']    = $subcategory->meta_keywords ?? '';
-        $data['meta_og_image']    = $subcategory->meta_og_image ?? '';
+        $data['meta_og_image'] = $subcategory->meta_og_image ? asset('frontend/images/subcategory/og/'.$subcategory->meta_og_image) : '';
         $data['meta_og_alt']      = $subcategory->meta_og_alt ?? '';
         $data['category'] = Category::where('id', $subcategory->category_id)->first();
 

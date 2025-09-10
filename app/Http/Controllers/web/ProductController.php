@@ -16,7 +16,7 @@ class ProductController extends Controller
         $data['meta_title']       = $product->meta_title ?? '';
         $data['meta_description'] = $product->meta_description ?? '';
         $data['meta_keywords']    = $product->meta_keywords ?? '';
-        $data['meta_og_image']    = $product->meta_og_image ?? '';
+        $data['meta_og_image']    = $product->meta_og_image ? asset('frontend/images/product/og/'.$product->meta_og_image) : '';
         $data['meta_og_alt']      = $product->meta_og_alt ?? '';
 
         $data['products'] = Product::where([
