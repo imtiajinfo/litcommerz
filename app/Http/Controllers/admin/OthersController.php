@@ -155,6 +155,32 @@ class OthersController extends Controller
         return response()->json(['success' => true, 'mgs' => 'Privacy Policy Successfully Updated']);
     }
 
+    public function aboutUs()
+    {
+        $aboutData = $this->getValueByKey('about_us');
+        return view('admin.others.about_us', $aboutData);
+    }
+
+    public function aboutUs_store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'value' => 'required',
+            'meta_og_image' => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
+            'meta_title' => 'nullable|string|max:60',
+            'meta_description' => 'nullable|string|max:160',
+            'meta_keywords' => 'nullable|string',
+            'meta_og_alt' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => true, 'errors' => $validator->errors()]);
+        }
+
+        $this->storeValueByKey('about_us', $request);
+
+        return response()->json(['success' => true, 'mgs' => 'About Us Successfully Updated']);
+    }
+
     public function faq()
     {
         $data = $this->getValueByKey('faq');

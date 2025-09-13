@@ -1,34 +1,19 @@
 @extends('web.layouts.master')
 
-@section('title', 'Shipping Details - My Daily Shop')
-
-@php
-    $setting = Helper::setting();
-@endphp
+@section('title', @$meta_title ?? 'Shipping Details')
+@section('meta_title', @$meta_title)
+@section('meta_description', @$meta_description)
+@section('meta_keywords', @$meta_keywords)
+@section('meta_og_image', @$meta_og_image ? asset($meta_og_image) : '')
+@section('meta_og_alt', @$meta_og_alt)
 
 @section('main')
 
-<!-- breadcrumb -->
-<div class="bg-gray-13 bg-md-transparent">
+<div class="bg-img-hero mb-14">
     <div class="container">
-        <!-- breadcrumb -->
-        <div class="my-md-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Shipping Details</li>
-                </ol>
-            </nav>
-        </div>
-        <!-- End breadcrumb -->
-    </div>
-</div>
-<!-- End breadcrumb -->
-
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            {!! $data !!}
+        <div class="flex-content-center pt-5 mt-5 flex-column mx-auto text-center">
+            <h1 class="h1 font-weight-bold">Shipping Details</h1>
+            {!!@$data !!}
         </div>
     </div>
 </div>

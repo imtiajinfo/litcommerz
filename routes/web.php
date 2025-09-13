@@ -249,6 +249,10 @@ Route::group(['middleware' => 'admin_auth', 'prefix' => 'admin-panel', 'as' => '
     // terms and conditions
     Route::get('privacyPolicy', [AdminOthers::class, 'privacyPolicy'])->name('privacyPolicy.index');
     Route::post('privacyPolicy', [AdminOthers::class, 'privacyPolicy_store'])->name('privacyPolicy.store');
+
+    Route::get('about', [AdminOthers::class, 'aboutUs'])->name('aboutUs.index');
+    Route::post('about', [AdminOthers::class, 'aboutUs_store'])->name('aboutUs.store');
+
     // email setting
     Route::get('mailSetting', [MailSettingController::class, 'index'])->name('mailSetting.index');
     Route::post('mailSetting', [MailSettingController::class, 'store'])->name('mailSetting.store');

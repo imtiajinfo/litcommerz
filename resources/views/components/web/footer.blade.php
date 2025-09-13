@@ -120,8 +120,10 @@
                                     class="list-group list-group-flush list-group-borderless mb-0 list-group-transparent">
 
                                     <li><a class="list-group-item list-group-item-action" href="/about">About Us</a></li>
+                                    <li><a class="list-group-item list-group-item-action" href="/privacy-policy">Privacy Policy</a></li>
                                     <li><a class="list-group-item list-group-item-action" href="/faq">FAQs</a></li>
                                     <li><a class="list-group-item list-group-item-action" href="/contact">Contact Us</a></li>
+                                    <li><a class="list-group-item list-group-item-action" href="/how-to-order">How To Order</a></li>
                                     <li><a class="list-group-item list-group-item-action" href="/orders">Track Your Order</a></li>
                                 </ul>
                                 <!-- End List Group -->

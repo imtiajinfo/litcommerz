@@ -1,10 +1,11 @@
 @extends('web.layouts.master')
 
-@section('title', 'About - My Daily Shop')
-
-@php
-    $setting = Helper::setting();
-@endphp
+@section('title', @$meta_title ?? 'About')
+@section('meta_title', @$meta_title)
+@section('meta_description', @$meta_description)
+@section('meta_keywords', @$meta_keywords)
+@section('meta_og_image', @$meta_og_image ? asset($meta_og_image) : '')
+@section('meta_og_alt', @$meta_og_alt)
 
 @section('main')
 
@@ -12,7 +13,7 @@
     <div class="container">
         <div class="flex-content-center pt-5 mt-5 flex-column mx-auto text-center">
             <h1 class="h1 font-weight-bold">About Us</h1>
-            {!! @$setting->about !!}
+            {!!@$data !!}
         </div>
     </div>
 </div>

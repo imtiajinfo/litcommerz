@@ -11,13 +11,20 @@ use Validator;
 class OthersController extends Controller
 {
     public function shipping_details(){
-        $value = KeyValueSetting::where('key', 'shipping_details')->first();
-        if(!empty($value)){
-            $data = $value->value;
-        }else{
-            $data = '';
+        $about = KeyValueSetting::where('key', 'shipping_details')->first();
+
+        if ($about) {
+            $data            = $about->value;
+            $meta_title      = $about->meta_title;
+            $meta_description= $about->meta_description;
+            $meta_keywords   = $about->meta_keywords;
+            $meta_og_image   = $about->meta_og_image;
+            $meta_og_alt     = $about->meta_og_alt;
+        } else {
+            $data = $meta_title = $meta_description = $meta_keywords = $meta_og_image = $meta_og_alt = '';
         }
-        return view('web.others.shipping_details', compact('data'));
+
+        return view('web.others.shipping_details', compact('data', 'meta_title', 'meta_description', 'meta_keywords', 'meta_og_image', 'meta_og_alt'));
     }
       public function physicalStore(){
           $value = $this->getValueByKey('physical_store');
@@ -32,23 +39,53 @@ class OthersController extends Controller
         }
         return view('web.others.banner_gallery', compact('data'));
     }
-    public function how_to_order(){
-        $value = KeyValueSetting::where('key', 'how_to_order')->first();
-        if(!empty($value)){
-            $data = $value->value;
-        }else{
-            $data = '';
+    public function how_to_order()
+    {
+        $about = KeyValueSetting::where('key', 'how_to_order')->first();
+
+        if ($about) {
+            $data            = $about->value;
+            $meta_title      = $about->meta_title;
+            $meta_description= $about->meta_description;
+            $meta_keywords   = $about->meta_keywords;
+            $meta_og_image   = $about->meta_og_image;
+            $meta_og_alt     = $about->meta_og_alt;
+        } else {
+            $data = $meta_title = $meta_description = $meta_keywords = $meta_og_image = $meta_og_alt = '';
         }
-        return view('web.others.how_to_order', compact('data'));
+
+        return view('web.others.how_to_order', compact(
+            'data',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+            'meta_og_image',
+            'meta_og_alt'
+        ));
     }
-    public function privacy_policy(){
-        $value = KeyValueSetting::where('key', 'privacy_policy')->first();
-        if(!empty($value)){
-            $data = $value->value;
-        }else{
-            $data = '';
+    public function privacy_policy()
+    {
+        $about = KeyValueSetting::where('key', 'privacy_policy')->first();
+
+        if ($about) {
+            $data            = $about->value;
+            $meta_title      = $about->meta_title;
+            $meta_description= $about->meta_description;
+            $meta_keywords   = $about->meta_keywords;
+            $meta_og_image   = $about->meta_og_image;
+            $meta_og_alt     = $about->meta_og_alt;
+        } else {
+            $data = $meta_title = $meta_description = $meta_keywords = $meta_og_image = $meta_og_alt = '';
         }
-        return view('web.others.privacy_policy', compact('data'));
+
+        return view('web.terms_conditions.index', compact(
+            'data',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+            'meta_og_image',
+            'meta_og_alt'
+        ));
     }
     
     public function complain_form(){

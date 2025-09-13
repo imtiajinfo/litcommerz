@@ -1,10 +1,11 @@
 @extends('web.layouts.master')
 
-@section('title', 'Contact - My Daily Shop')
-
-@php
-    $setting = Helper::setting();
-@endphp
+@section('title', @$meta_title ?? 'Contact')
+@section('meta_title', @$meta_title)
+@section('meta_description', @$meta_description)
+@section('meta_keywords', @$meta_keywords)
+@section('meta_og_image', @$meta_og_image ? asset($meta_og_image) : '')
+@section('meta_og_alt', @$meta_og_alt)
 
 @section('main')
 
@@ -103,10 +104,7 @@
             </div>
             <div class="mr-xl-6">
 
-              @php
-                $contact = \App\Models\KeyValueSetting::where('key', 'contact_us')->first();
-              @endphp
-              {!! $contact->value !!}
+              {!!@$data !!}
 
             </div>
         </div>
