@@ -67,7 +67,7 @@
                     <input type="text" class="form-control" name="default_twitter_card" value="{{ @$default_twitter_card }}">
                 </div>
 
-                <div class="col-lg-12 mt-3">
+                <div class="col-lg-12 mt-3 d-none">
                     <label>Default Schema Type</label>
                     <input type="text" class="form-control" name="default_schema_type" value="{{ @$default_schema_type }}">
                 </div>

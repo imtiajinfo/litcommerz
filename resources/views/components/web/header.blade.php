@@ -306,7 +306,7 @@
 
                                     <li class="nav-item u-header__nav-item"><a class="nav-link u-header__nav-link {{ request()->is('blogs') ? 'text-primary active-header' : '' }}" href="/blogs">Blogs</a></li>
 
-                                    <li class="nav-item hs-has-sub-menu u-header__nav-item {{ request()->is('physical-store') || request()->is('banner-gallery') ? 'text-primary active-header' : '' }}"
+                                    <li class="nav-item hs-has-sub-menu u-header__nav-item d-none {{ request()->is('physical-store') || request()->is('banner-gallery') ? 'text-primary active-header' : '' }}"
                                         data-event="hover"
                                         data-animation-in="slideInUp"
                                         data-animation-out="fadeOut">

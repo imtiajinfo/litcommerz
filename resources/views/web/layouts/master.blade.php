@@ -6,16 +6,51 @@
 
 <head>
     <!-- Title -->
-    <title>@yield('title', '')</title>
+    <title>@yield('title', $setting->meta_title ?? '')</title>
 
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="@yield('meta_title', '')">
-    <meta name="description" content="@yield('meta_description', '')">
-    <meta name="keywords" content="@yield('meta_keywords', '')">
-    <meta property="og:image" content="@yield('meta_og_image', '')">
-    <meta property="og:alt" content="@yield('meta_og_alt', '')">
+
+    <!-- Base Meta -->
+    <meta name="title" content="@yield('meta_title', $setting->meta_title ?? '')">
+    <meta name="description" content="@yield('meta_description', $setting->meta_description ?? '')">
+    <meta name="keywords" content="@yield('meta_keywords', $setting->meta_keywords ?? '')">
+
+     <!-- Open Graph -->
+    <meta property="og:title" content="@yield('meta_title', $setting->meta_title ?? '')">
+    <meta property="og:description" content="@yield('meta_description', $setting->meta_description ?? '')">
+    <meta property="og:image" content="@yield('meta_og_image', asset($setting->meta_og_image ?? ''))">
+    <meta property="og:alt" content="@yield('meta_og_alt', $setting->meta_og_alt ?? '')">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="{{ $setting->default_twitter_card ?? 'summary' }}">
+    <meta name="twitter:title" content="@yield('meta_title', $setting->meta_title ?? '')">
+    <meta name="twitter:description" content="@yield('meta_description', $setting->meta_description ?? '')">
+    <meta name="twitter:image" content="@yield('meta_og_image', asset($setting->meta_og_image ?? ''))">
+
+    <!-- Site Verification -->
+    @if($setting->google_site_verification)
+        <meta name="google-site-verification" content="{{ $setting->google_site_verification }}">
+    @endif
+    @if($setting->bing_site_verification)
+        <meta name="msvalidate.01" content="{{ $setting->bing_site_verification }}">
+    @endif
+    @if($setting->yandex_site_verification)
+        <meta name="yandex-verification" content="{{ $setting->yandex_site_verification }}">
+    @endif
+
+    <!-- Tracking Codes -->
+    {!! $setting->google_analytics ?? '' !!}
+
+    @if($setting->google_tag_manager)
+        <!-- Google Tag Manager -->
+        {!! $setting->google_tag_manager !!}
+        <!-- End Google Tag Manager -->
+    @endif
+
+    {!! $setting->facebook_pixel ?? '' !!}
+
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('frontend/logo/'.$setting->meta_logo) }}">
     <!-- Google Fonts -->
@@ -46,6 +81,10 @@
 
 <body>
 
+    @if($setting->google_tag_manager)
+        <noscript>{!! $setting->google_tag_manager !!}</noscript>
+    @endif
+
     <x-web.header />
 
     <!-- ========== MAIN CONTENT ========== -->
@@ -75,7 +114,7 @@
     </a>
     <!-- End sidebar cart section icon -->
 
-    <a href="https://wa.me/819064764347" target="_blank" class="floating-button whatsapp-btn"
+    <a href="https://wa.me/{{ $setting->phone }}" target="_blank" class="floating-button whatsapp-btn"
       title="Chat on WhatsApp">
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
     </a>
