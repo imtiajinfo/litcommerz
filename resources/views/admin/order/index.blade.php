@@ -112,7 +112,7 @@ $setting = Helper::setting();
                                                 @elseif($item->track_status==6){{"Cancelled"}}@endif</b>
                                             </a></li>
 
-                                            <li class="border border-bottom-1">
+                                            <li class="border border-bottom-1 d-none">
                                                 <a class="fw-bold dropdown-item me-3 btn btn-warning mb-1 btn-sm" 
                                                   href="{{ url('admin/purchase-invoice/'.$item->id) }}" target="_blank">
                                                     Buy Price PDF

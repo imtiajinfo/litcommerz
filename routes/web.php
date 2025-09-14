@@ -54,6 +54,8 @@ use App\Http\Controllers\admin\OthersController as AdminOthers;
 use App\Http\Controllers\admin\MailSettingController;
 use App\Http\Controllers\admin\RegionController;
 use App\Http\Controllers\admin\DeliveryChargeController;
+use App\Http\Controllers\Admin\PaymentGatewayController;
+use App\Http\Controllers\Admin\CourierController;
 
 // frontend 
 
@@ -200,6 +202,9 @@ Route::group(['middleware' => 'admin_auth', 'prefix' => 'admin-panel', 'as' => '
     Route::get('orders-edit/{id}', [AdminOrder::class, 'order_edit'])->name('order_edit');
     Route::post('orders-update/{id}', [AdminOrder::class, 'order_update'])->name('order_update');
     Route::resource('banner', BannerController::class);
+
+    Route::resource('paymentGateways', PaymentGatewayController::class);
+    Route::resource('couriers', CourierController::class);
     Route::resource('sepecialProduct', SpecialProductController::class);
     Route::resource('hotItems', HotItemProductController::class);
     Route::resource('newArrivals', NewArrivalProductController::class);

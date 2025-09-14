@@ -7,13 +7,13 @@
                 <input type="text" class="form-control" name="product_name" placeholder="Product Name" required>
             </div>
         </div>
-        <div class="col-lg-2 col-sm-2">
+        <div class="col-lg-4 col-sm-4">
             <div class="form-group">
                 <label >Weight</label>
                 <input type="text" placeholder="Weight" name="weight" class="form-control">
             </div>
         </div>
-        <div class="col-lg-2 col-sm-2">
+        <div class="col-lg-4 col-sm-4">
             <div class="form-group" id="unit">
                 <label>Select Unit</label>
                 <select class="form-control" name="unit">
@@ -24,7 +24,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-4">
+        <div class="col-lg-4 col-sm-4 d-none">
             <div class="form-group">
                 <label class="required">Buy Price<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="buy_price" placeholder="Buy Price" required min="0" oninput="this.value = this.value < 0 ? 0 : this.value">
