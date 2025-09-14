@@ -9,18 +9,5 @@ class Setting extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'email',
-	    'phone',
-	    'facebook',
-	    'twitter',
-	    'linkedin',
-	    'whatsapp',
-	    'logo',	
-	    'meta_logo',
-	    'address',
-	    'currency_icon',	
-	    'faq',
-	    'about'
-    ];
+    protected $guarded = [];
 }

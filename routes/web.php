@@ -257,6 +257,8 @@ Route::group(['middleware' => 'admin_auth', 'prefix' => 'admin-panel', 'as' => '
     Route::get('mailSetting', [MailSettingController::class, 'index'])->name('mailSetting.index');
     Route::post('mailSetting', [MailSettingController::class, 'store'])->name('mailSetting.store');
 
+    Route::get('seoSettings', [SettingController::class, 'seoSettings'])->name('seoSettings.index');
+    Route::post('seoSettings.index', [SettingController::class, 'seoSettingsStore'])->name('seoSettings.store');
 });
 
 Route::get('admin/invoice/{order_id}', [AdminOrder::class, 'invoice'])->name('order.invoice');

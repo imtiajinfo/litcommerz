@@ -73,5 +73,70 @@ class SettingController extends Controller
         }
     }
 
+    public function seoSettings()
+    {
+        $settings = Setting::firstOrNew();
+
+        return view('admin.settings.seo', $settings->toArray());
+    }
+
+    public function seoSettingsStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'meta_title' => 'nullable|string|max:60',
+            'meta_description' => 'nullable|string|max:160',
+            'meta_keywords' => 'nullable|string',
+            'meta_og_image' => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
+            'meta_og_alt' => 'nullable|string',
+            'google_analytics' => 'nullable|string',
+            'google_tag_manager' => 'nullable|string',
+            'facebook_pixel' => 'nullable|string',
+            'google_site_verification' => 'nullable|string',
+            'bing_site_verification' => 'nullable|string',
+            'yandex_site_verification' => 'nullable|string',
+            'default_twitter_card' => 'nullable|string',
+            'default_schema_type' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => true, 'errors' => $validator->errors()]);
+        }
+
+        $settings = Setting::firstOrNew();
+
+        // Handle OG image upload
+        if ($request->hasFile('meta_og_image')) {
+            $file = $request->file('meta_og_image');
+            $filename = time() . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = public_path('frontend/images/settings');
+            if (!file_exists($path)) mkdir($path, 0755, true);
+            $file->move($path, $filename);
+            $settings->meta_og_image = '/frontend/images/settings/' . $filename;
+        }
+
+        $fields = [
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+            'meta_og_alt',
+            'google_analytics',
+            'google_tag_manager',
+            'facebook_pixel',
+            'google_site_verification',
+            'bing_site_verification',
+            'yandex_site_verification',
+            'default_twitter_card',
+            'default_schema_type'
+        ];
+
+        foreach ($fields as $field) {
+            $settings->$field = $request->$field ?? null;
+        }
+
+        $settings->save();
+
+        return response()->json(['success' => true, 'mgs' => 'Setting Successfully Updated']);
+    }
+
     
 }
