@@ -54,8 +54,8 @@ use App\Http\Controllers\admin\OthersController as AdminOthers;
 use App\Http\Controllers\admin\MailSettingController;
 use App\Http\Controllers\admin\RegionController;
 use App\Http\Controllers\admin\DeliveryChargeController;
-use App\Http\Controllers\Admin\PaymentGatewayController;
-use App\Http\Controllers\Admin\CourierController;
+use App\Http\Controllers\admin\PaymentGatewayController;
+use App\Http\Controllers\admin\CourierController;
 
 // frontend 
 
