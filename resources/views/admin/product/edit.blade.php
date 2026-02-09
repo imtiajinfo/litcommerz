@@ -89,7 +89,7 @@
               @else
               @foreach($product->categories as $index => $category)
               <div class="row align-items-end cat-sub-row mb-2">
-                  <div class="col-lg-5">
+                  <div class="col-lg-6">
                       <label class="{{ $index === 0 ? 'required' : '' }}">Category</label>
                       <select name="category_ids[]" class="form-control cat-select" {{ $index === 0 ? 'required' : '' }}>
                           <option value="">Select Category</option>
@@ -100,7 +100,7 @@
                           @endforeach
                       </select>
                   </div>
-                  <div class="col-lg-4">
+                  <div class="col-lg-6">
                       <label class="">Subcategory</label>
                       <select name="subcategory_ids[]" class="form-control subcat-select">
                           <option value="">Select Subcategory</option>
@@ -114,12 +114,12 @@
                           @endforeach
                       </select>
                   </div>
-                  <div class="col-lg-2">
+                  <div class="col-lg-2 d-none">
                       <label>Display No.</label>
                       <input type="number" class="form-control" name="sl[]" value="{{ $category->pivot->sl ?? 0 }}" min="0" oninput="this.value = this.value < 0 ? 0 : this.value">
                   </div>
 
-                  <div class="col-lg-1">
+                  <div class="col-lg-1 d-none">
                       @if($index === 0)
                       <button type="button" class="btn btn-success add-row" title="Add row">
                           <i class="fa fa-plus"></i>

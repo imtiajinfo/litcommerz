@@ -7,13 +7,13 @@
                 <input type="text" class="form-control" name="product_name" placeholder="Product Name" required>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-4">
+        <div class="col-lg-3 col-sm-3">
             <div class="form-group">
                 <label >Weight</label>
                 <input type="text" placeholder="Weight" name="weight" class="form-control">
             </div>
         </div>
-        <div class="col-lg-4 col-sm-4">
+        <div class="col-lg-3 col-sm-3">
             <div class="form-group" id="unit">
                 <label>Select Unit</label>
                 <select class="form-control" name="unit">
@@ -24,13 +24,13 @@
                 </select>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-4 d-none">
+        <div class="col-lg-3 col-sm-3">
             <div class="form-group">
                 <label class="required">Buy Price<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="buy_price" placeholder="Buy Price" required min="0" oninput="this.value = this.value < 0 ? 0 : this.value">
             </div>
         </div>
-        <div class="col-lg-4 col-sm-4">
+        <div class="col-lg-3 col-sm-3">
             <div class="form-group">
                 <label class="required">Sell Price<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="sell_price" placeholder="Sell Price" required min="0" oninput="this.value = this.value < 0 ? 0 : this.value">
@@ -39,7 +39,7 @@
 
         <div id="cat-sub-wrapper">
           <div class="row align-items-end cat-sub-row mb-2">
-            <div class="col-lg-5">
+            <div class="col-lg-6">
               <label class="required">Category<span class="text-danger">*</span></label>
               <select name="category_ids[]" class="form-control cat-select" required>
                 <option value="">Select Category</option>
@@ -48,17 +48,17 @@
                 @endforeach
               </select>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
               <label class="required">Subcategory</label>
               <select name="subcategory_ids[]" class="form-control subcat-select">
                 <option value="">Select Subcategory</option>
               </select>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 d-none">
               <label>Display No.</label>
               <input type="number" name="sl[]" class="form-control" min="0" oninput="this.value = this.value < 0 ? 0 : this.value">
             </div>
-            <div class="col-lg-1">
+            <div class="col-lg-1 d-none">
               <button type="button" class="btn btn-success add-row" title="Add row">
                 <i class="fa fa-plus"></i>
               </button>

@@ -73,7 +73,7 @@
                             <th class="sorting">Old SubCategory</th> --}}
                             <th class="sorting">Category</th>
                             <th class="sorting">SubCategory</th>
-                            <th class="sorting">Display No.</th>
+                            {{-- <th class="sorting">Display No.</th> --}}
                             <th class="sorting">Unit</th>
                             {{-- <th class="sorting">Offer Category</th> --}}
                             <th class="sorting">Offer</th>
@@ -99,21 +99,21 @@
                                 {{-- <td>{{ $item->category->category_name }}</td>
                                 <td>{{ $item->subcategory->subcategory_name ?? '' }}</td> --}}
                                 <td style="text-align: left; width: 10%;">
-                                    {!! $item->categories->map(function($cat, $index) {
-                                        return ($index + 1) . '. ' . $cat->category_name;
+                                    {!! $item->categories->map(function($cat) {
+                                        return $cat->category_name;
                                     })->implode('<br>') !!}
                                 </td>
                                 <td style="text-align: left; width: 10%;">
-                                    {!! $item->categories->map(function($cat, $index) use ($all_subcategories) {
+                                    {!! $item->categories->map(function($cat) use ($all_subcategories) {
                                         $sub = $all_subcategories[$cat->pivot->subcategory_id]->subcategory_name ?? '';
-                                        return ($index + 1) . '. ' . $sub;
+                                        return $sub;
                                     })->implode('<br>') !!}
                                 </td>
-                                <td style="text-align: left; width: 5%;">
+                                {{-- <td style="text-align: left; width: 5%;">
                                     {!! $item->categories->map(function($cat, $index) {
                                         return ($index + 1) . '. ' . $cat->pivot->sl;
                                     })->implode('<br>') !!}
-                                </td>
+                                </td> --}}
 
                                 <td>{{ $item->weight }} {{ $item->unit_name }}</td>
                                 {{-- <td>{{ $item->offer_category }}</td> --}}

@@ -68,7 +68,7 @@ class OfferController extends Controller
             $offer->banner      = $imageName;
             $offer->start_date = $request->start_date;
             $offer->end_date   = $request->end_date;
-            $offer->home_show     = $request->home_show;
+            $offer->home_show     = $request->home_show ?? 0;
             $offer->status     = $request->status;
             $offer->save();
 
@@ -144,7 +144,7 @@ class OfferController extends Controller
             $offer->name       = $request->offer_name;
             $offer->start_date = $request->start_date;
             $offer->end_date   = $request->end_date;
-            $offer->home_show     = $request->home_show;
+            $offer->home_show     = $request->home_show ?? 0;
             $offer->status     = $request->status;
             $offer->save();
 

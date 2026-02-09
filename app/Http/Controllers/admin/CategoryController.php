@@ -40,12 +40,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // Auto-generate slug if not provided
         $slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->category_name);
 
         $validator = Validator::make($request->all(), [
             'category_name' => 'required|unique:categories',
-            'slug'          => 'required|unique:categories,slug',
+            'slug'          => 'unique:categories,slug',
             'image'         => 'required|image|mimes:jpeg,png,jpg|dimensions:width=600,height=600',
             'status'        => 'required',
             'meta_og_image' => 'nullable|image|mimes:jpeg,png,jpg|dimensions:width=1200,height=630',
@@ -55,30 +54,25 @@ class CategoryController extends Controller
             return response()->json(['error' => true, 'errors' => $validator->errors()]);
         }
 
-        // Upload Category Image
         $imageName = null;
         if ($request->hasFile('image')) {
             $imageName = Str::slug($request->category_name) . '-' . date('d.m.Y.h.s') . '.' . $request->image->extension();
             $request->image->move(public_path('frontend/images/category/'), $imageName);
         }
 
-        // Upload OG Image
         $ogImageName = null;
         if ($request->hasFile('meta_og_image')) {
             $ogImageName = Str::slug($request->category_name) . '-og-' . date('d.m.Y.h.s') . '.' . $request->meta_og_image->extension();
             $request->meta_og_image->move(public_path('frontend/images/category/og/'), $ogImageName);
         }
 
-        // Save Category
         $category = new Category();
         $category->category_name   = $request->category_name;
         $category->slug            = $slug;
         $category->image           = $imageName;
         $category->image_alt       = $request->image_alt;
         $category->status          = $request->status;
-        $category->home_show       = $request->home_show;
-
-        // SEO fields
+        $category->home_show       = $request->home_show ?? 0;
         $category->meta_title       = $request->meta_title;
         $category->meta_description = $request->meta_description;
         $category->meta_keywords    = $request->meta_keywords;
@@ -114,12 +108,11 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        // Auto-generate slug if empty
         $slug = $request->slug ? Str::slug($request->slug) : Str::slug($request->category_name);
 
         $rules = [
             'category_name' => 'required',
-            'slug'          => 'required|unique:categories,slug,' . $id, // exclude current record
+            'slug'          => 'required|unique:categories,slug,' . $id,
             'status'        => 'required',
         ];
 
@@ -137,7 +130,6 @@ class CategoryController extends Controller
             return response()->json(['error' => true, 'errors' => $validator->errors()]);
         }
 
-        // Handle main image
         if ($request->hasFile('image')) {
             $imageName = Str::slug($request->category_name) . '-' . date('d.m.Y.h.s') . '.' . $request->image->extension();
             $request->image->move(public_path('frontend/images/category/'), $imageName);
@@ -145,7 +137,6 @@ class CategoryController extends Controller
             $category->image = $imageName;
         }
 
-        // Handle OG image
         if ($request->hasFile('meta_og_image')) {
             $ogImageName = Str::slug($request->category_name) . '-og-' . date('d.m.Y.h.s') . '.' . $request->meta_og_image->extension();
             $request->meta_og_image->move(public_path('frontend/images/category/og/'), $ogImageName);
@@ -153,12 +144,11 @@ class CategoryController extends Controller
             $category->meta_og_image = $ogImageName;
         }
 
-        // Update all fields
         $category->category_name   = $request->category_name;
         $category->slug            = $slug;
         $category->image_alt       = $request->image_alt;
         $category->status          = $request->status;
-        $category->home_show       = $request->home_show;
+        $category->home_show       = $request->home_show ?? 0;
         $category->meta_title       = $request->meta_title;
         $category->meta_description = $request->meta_description;
         $category->meta_keywords    = $request->meta_keywords;
